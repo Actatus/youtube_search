@@ -23,10 +23,11 @@ document.addEventListener('DOMContentLoaded', function(){
             redirect: "follow"
         };
 
-        return fetch("https://www.googleapis.com/youtube/v3/channels?forUsername="+ query + '&key=' + apiKey, requestOptions)
+        return fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q="+ query + '&type=channel&key=' + apiKey, requestOptions)
             .then(response => response.text())
             .then(result => {
                 console.log(result);
+                console.log(query);                
             })
             .catch(error => {
                 console.log('error in fetch');
