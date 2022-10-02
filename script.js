@@ -14,10 +14,10 @@ document.addEventListener('DOMContentLoaded', function(){
             alert('Invalid search. Is the search bar empty?');
         }
 
-        retrieveDataFromAPI(searchQuery);
+        retrieveChannelFromAPI(searchQuery);
     });
 
-    function retrieveDataFromAPI(query){
+    function retrieveChannelFromAPI(query){
         let requestOptions = {
             method: "GET",
             redirect: "follow"
@@ -27,14 +27,26 @@ document.addEventListener('DOMContentLoaded', function(){
         return fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q="+ query + '&type=channel&key=' + apiKey, requestOptions)
             .then(response => response.text())
             .then(result => {
-                let parsedResult = JSON.parse(result);
-                console.log(parsedResult.items[0]);
-                console.log(query);                
+                // let parsedResult = JSON.parse(result);
+                // console.log(parsedResult.items[0]);
+                // console.log(query); 
+                parseResults(JSON.parse(result));               
             })
             .catch(error => {
                 console.log('error in fetch');
                 console.log(error);
             });
+    }
+
+    function parseResults(results){
+        let channelInfo = {
+            channelId: results.items[0].snippet.channelId,
+            chanelTitle: results.items[0].snippet.channelTitle,
+            channelDescription: results.items[0].snippet.description,
+            channelThumbnail: results.items[0].snippet.thumbnails.default.url
+        }
+
+        console.log(channelInfo);
     }
 
 });
