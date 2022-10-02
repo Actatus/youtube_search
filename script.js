@@ -23,10 +23,12 @@ document.addEventListener('DOMContentLoaded', function(){
             redirect: "follow"
         };
 
+        //search channels via API according to query using search parameters with limited results
         return fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q="+ query + '&type=channel&key=' + apiKey, requestOptions)
             .then(response => response.text())
             .then(result => {
-                console.log(result);
+                let parsedResult = JSON.parse(result);
+                console.log(parsedResult.items[0]);
                 console.log(query);                
             })
             .catch(error => {
