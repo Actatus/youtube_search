@@ -14,40 +14,27 @@ document.addEventListener('DOMContentLoaded', function(){
             alert('Invalid search. Is the search bar empty?');
         }
 
-        retrieveChannelFromAPI(searchQuery);
+       retrieveChannelFromAPI(searchQuery);
     });
 
-    function retrieveChannelFromAPI(query){
+    async function retrieveChannelFromAPI(query){
         let requestOptions = {
             method: "GET",
             redirect: "follow"
         };
 
-        //search channels via API according to query using search parameters with limited results
-        return fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q="+ query + '&type=channel&key=' + apiKey, requestOptions)
+        //store the parsed channelInfo from api fetch. Becomes object with props { channelId, channelTitle, channelDescription, channelThumbnail }
+        let channelSearchResults = await fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q="+ query + '&type=channel&key=' + apiKey, requestOptions)
             .then(response => response.text())
             .then(result => {
-                // let parsedResult = JSON.parse(result);
-                // console.log(parsedResult.items[0]);
-                // console.log(query); 
-                parseResults(JSON.parse(result));               
+                return parseResults(JSON.parse(result));
             })
             .catch(error => {
                 console.log('error in fetch');
-                console.log(error);
+                console.log('error');
             });
     }
-
-    // function retrieveVideosFromAPI(channel){
-    //     let requestOptions = {
-    //         method: "GET",
-    //         redirect: "follow"
-    //     };
-        
-    //     //use channel ID from parseResults to retrieve a list of videos by that channel.
-    //     return fetch("https://www.googleapis.com/youtube/v3/")  
-    // }
-
+    
     function parseResults(results){
         let channelInfo = {
             channelId: results.items[0].snippet.channelId,
@@ -57,6 +44,12 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 
         console.log(channelInfo);
+        return channelInfo;
     }
+
+    //Call API with channelId from retrieveChannelFromAPI to get the channel playlist Id.
+
+    //Compile channelInfo from retrieveChannelFromAPI, channel playlist id, and channel videos in final function.
+    
 
 });
