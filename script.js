@@ -38,6 +38,16 @@ document.addEventListener('DOMContentLoaded', function(){
             });
     }
 
+    // function retrieveVideosFromAPI(channel){
+    //     let requestOptions = {
+    //         method: "GET",
+    //         redirect: "follow"
+    //     };
+        
+    //     //use channel ID from parseResults to retrieve a list of videos by that channel.
+    //     return fetch("https://www.googleapis.com/youtube/v3/")  
+    // }
+
     function parseResults(results){
         let channelInfo = {
             channelId: results.items[0].snippet.channelId,
