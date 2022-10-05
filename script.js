@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 
        retrieveChannelFromAPI(searchQuery);
+       
     });
 
     async function retrieveChannelFromAPI(query){
@@ -33,6 +34,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 console.log('error in fetch');
                 console.log('error');
             });
+
+        return channelSearchResults;
     }
     
     function parseResults(results){
@@ -45,6 +48,24 @@ document.addEventListener('DOMContentLoaded', function(){
 
         console.log(channelInfo);
         return channelInfo;
+    }
+
+    async function retrievePlaylistId(channelId){
+        let requestOptions = {
+            method: "GET",
+            redirect: "follow"
+        };
+
+        let playlistId = await fetch("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=" + chanelId + "& key=" + apiKey, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            console.log(JSON.parse(result));
+        })
+        .catch(error => {
+            console.log('error in playlistId fetch');
+        });
+
+        return channelSearchResults;        
     }
 
     //Call API with channelId from retrieveChannelFromAPI to get the channel playlist Id.
