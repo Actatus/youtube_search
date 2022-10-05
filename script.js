@@ -14,8 +14,10 @@ document.addEventListener('DOMContentLoaded', function(){
             alert('Invalid search. Is the search bar empty?');
         }
 
-       let channelInfo = retrieveChannelFromAPI(searchQuery);
-       retrievePlaylistId(channelInfo.channelId);
+    //    let channelInfo = retrieveChannelFromAPI(searchQuery);
+    //    retrievePlaylistId(channelInfo.channelId);
+
+    compileResults(searchQuery);
         
     });
 
@@ -50,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function(){
         return channelInfo;
     }
 
+    //Call API with channelId from retrieveChannelFromAPI to get the channel playlist Id.
     async function retrievePlaylistId(channelId){
         let requestOptions = {
             method: "GET",
@@ -68,10 +71,15 @@ document.addEventListener('DOMContentLoaded', function(){
         console.log(playlistId);
         return playlistId;        
     }
-
-    //Call API with channelId from retrieveChannelFromAPI to get the channel playlist Id.
+    
 
     //Compile channelInfo from retrieveChannelFromAPI, channel playlist id, and channel videos in final function.
-    
+    async function compileResults(query){
+        let channelInfo = await retrieveChannelFromAPI(query);
+        let channelPlaylistId = await retrievePlaylistId(channelInfo.channelId);
+
+        channelInfo.playlistId = channelPlaylistId;
+        console.log(channelInfo);
+    }
 
 });
