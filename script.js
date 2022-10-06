@@ -70,8 +70,18 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     //Using channelPlaylist url, retrieve 9 most recent videos.
+    //Note: can use resourceId.videoId "xxxxxxxx" to create url with youtube.com/watch?=[videoId]
     async function retrieveRecentVideos(playlistUrl){
-        
+        let recentVideos = await fetch('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=9&playlistId=' + playlistUrl + '&key='+ apiKey)
+        .then(response => response.text())
+        .then(result => {
+            return JSON.parse(result);
+        })
+        .catch(error => {
+            console.log('error in playlistVideos fetch');
+        })
+        console.log(recentVideos);
+        return recentVideos;
     }
     
 
@@ -80,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function(){
         let channelInfo = await retrieveChannelFromAPI(query);
         let channelPlaylistInfo = await retrievePlaylistId(channelInfo.channelId);
         channelInfo.playlistId = channelPlaylistInfo.items[0].contentDetails.relatedPlaylists.uploads;
+        await retrieveRecentVideos(channelInfo.playlistId);
 
         console.log(channelInfo);
     }
