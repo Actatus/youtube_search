@@ -76,9 +76,9 @@ document.addEventListener('DOMContentLoaded', function(){
     //Compile channelInfo from retrieveChannelFromAPI, channel playlist id, and channel videos in final function.
     async function compileResults(query){
         let channelInfo = await retrieveChannelFromAPI(query);
-        let channelPlaylistId = await retrievePlaylistId(channelInfo.channelId);
+        let channelPlaylistInfo = await retrievePlaylistId(channelInfo.channelId);
+        channelInfo.playlistId = channelPlaylistInfo.items[0].contentDetails.relatedPlaylists.uploads;
 
-        channelInfo.playlistId = channelPlaylistId;
         console.log(channelInfo);
     }
 
