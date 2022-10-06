@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', function(){
     const searchButton = document.getElementById('search-button');
     const searchOutputContainer = document.getElementById('search-output-container');
 
+    const requestOptions = {
+            method: "GET",
+            redirect: "follow"
+        }
+
     searchButton.addEventListener('click', () => {
         let searchQuery = searchInput.value;
 
@@ -22,10 +27,6 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 
     async function retrieveChannelFromAPI(query){
-        let requestOptions = {
-            method: "GET",
-            redirect: "follow"
-        };
 
         //store the parsed channelInfo from api fetch. Becomes object with props { channelId, channelTitle, channelDescription, channelThumbnail }
         let channelSearchResults = await fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q="+ query + '&type=channel&key=' + apiKey, requestOptions)
@@ -54,10 +55,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
     //Call API with channelId from retrieveChannelFromAPI to get the channel playlist Id.
     async function retrievePlaylistId(channelId){
-        let requestOptions = {
-            method: "GET",
-            redirect: "follow"
-        };
 
         let playlistId = await fetch("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=" + channelId + "&key=" + apiKey, requestOptions)
         .then(response => response.text())
@@ -70,6 +67,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
         console.log(playlistId);
         return playlistId;        
+    }
+
+    //Using channelPlaylist url, retrieve 9 most recent videos.
+    async function retrieveRecentVideos(playlistUrl){
+        
     }
     
 
