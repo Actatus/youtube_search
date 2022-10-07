@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function(){
         let channelSearchResults = await fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q="+ query + '&type=channel&key=' + apiKey, requestOptions)
             .then(response => response.text())
             .then(result => {
-                return parseResults(JSON.parse(result));
+                return parseChannelCallResults(JSON.parse(result));
             })
             .catch(error => {
                 console.log('error in fetch');
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function(){
         return channelSearchResults;
     }
     
-    function parseResults(results){
+    function parseChannelCallResults(results){
         let channelInfo = {
             channelId: results.items[0].snippet.channelId,
             chanelTitle: results.items[0].snippet.channelTitle,
