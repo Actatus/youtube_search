@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function(){
     //    let channelInfo = retrieveChannelFromAPI(searchQuery);
     //    retrievePlaylistId(channelInfo.channelId);
 
-    compileResults(searchQuery);
+        outputResults(searchQuery);
         
     });
 
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function(){
     function parseChannelCallResults(results){
         let channelInfo = {
             channelId: results.items[0].snippet.channelId,
-            chanelTitle: results.items[0].snippet.channelTitle,
+            channelTitle: results.items[0].snippet.channelTitle,
             channelDescription: results.items[0].snippet.description,
             channelThumbnail: results.items[0].snippet.thumbnails.default.url
         }
@@ -93,10 +93,11 @@ document.addEventListener('DOMContentLoaded', function(){
         channelInfo.playlistId = channelPlaylistInfo.items[0].contentDetails.relatedPlaylists.uploads;
         channelInfo.recentVideos = await retrieveRecentVideos(channelInfo.playlistId);
         
+        return channelInfo;
         console.log(channelInfo);
     }
 
-    function outputResults(channelInfo){
+    async function outputResults(query){
         //output channelThumbnail, title, and description to #channel-info-container
         //output videos as div 
             // <div>
@@ -105,7 +106,17 @@ document.addEventListener('DOMContentLoaded', function(){
             //         <h3>Video Title</h3>
             //     </a>
             // </div>
+
+        let channelInfo = await compileResults(query);
+
+        let channelThumbnail = document.createElement('img');
+        channelThumbnail.src = channelInfo.channelThumbnail;
+
+        let channelTitle = document.createElement('h2');
+        channelTitle.textContent = channelInfo.channelTitle;
         
+        channelInfoContainer.append(channelThumbnail);
+        channelInfoContainer.append(channelTitle);
     }
 
 });
