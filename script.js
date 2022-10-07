@@ -80,8 +80,7 @@ document.addEventListener('DOMContentLoaded', function(){
         .catch(error => {
             console.log('error in playlistVideos fetch');
         })
-        console.log(recentVideos);
-        return recentVideos;
+        return recentVideos.items;
     }
     
 
@@ -90,8 +89,8 @@ document.addEventListener('DOMContentLoaded', function(){
         let channelInfo = await retrieveChannelFromAPI(query);
         let channelPlaylistInfo = await retrievePlaylistId(channelInfo.channelId);
         channelInfo.playlistId = channelPlaylistInfo.items[0].contentDetails.relatedPlaylists.uploads;
-        await retrieveRecentVideos(channelInfo.playlistId);
-
+        channelInfo.recentVideos = await retrieveRecentVideos(channelInfo.playlistId);
+        
         console.log(channelInfo);
     }
 
