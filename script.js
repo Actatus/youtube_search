@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function(){
     const searchInput = document.getElementById('search-input')
     const searchButton = document.getElementById('search-button');
     const searchOutputContainer = document.getElementById('search-output-container');
+    const channelInfoContainer = document.getElementById('channel-info-container');
+    const recentVideosContainer = document.getElementById('recent-videos-container');
 
     const requestOptions = {
             method: "GET",
@@ -92,6 +94,18 @@ document.addEventListener('DOMContentLoaded', function(){
         channelInfo.recentVideos = await retrieveRecentVideos(channelInfo.playlistId);
         
         console.log(channelInfo);
+    }
+
+    function outputResults(channelInfo){
+        //output channelThumbnail, title, and description to #channel-info-container
+        //output videos as div 
+            // <div>
+            //     <a href = video-link>
+            //         <img src = video-thumbnail></img>
+            //         <h3>Video Title</h3>
+            //     </a>
+            // </div>
+        
     }
 
 });
