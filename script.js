@@ -114,7 +114,26 @@ document.addEventListener('DOMContentLoaded', function(){
 
         let channelTitle = document.createElement('h2');
         channelTitle.textContent = channelInfo.channelTitle;
-        
+
+        console.log(channelInfo);
+        for (let i = 0; i < channelInfo.recentVideos.length; i++){
+            let wrappingLink = document.createElement('a');
+            wrappingLink.href = "https://www.youtube.com/watch?v=" + channelInfo.recentVideos[i].snippet.resourceId.videoId;
+
+            let containingElement = document.createElement('div');
+            containingElement.id = 'video-container-' + i;
+
+            let videoThumbnail = document.createElement('img');
+            videoThumbnail.src = channelInfo.recentVideos[i].snippet.thumbnails.default.url;
+
+            let videoTitle = document.createElement('h3');
+            videoTitle.textContent = channelInfo.recentVideos[i].snippet.title;
+
+            recentVideosContainer.append(containingElement);
+            containingElement.append(videoThumbnail);
+            containingElement.append(videoTitle);
+        }
+
         channelInfoContainer.append(channelThumbnail);
         channelInfoContainer.append(channelTitle);
     }
