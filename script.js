@@ -15,15 +15,18 @@ document.addEventListener('DOMContentLoaded', function(){
 
     searchButton.addEventListener('click', () => {
         let searchQuery = searchInput.value;
-
+        
         //Check that there is input before performing the search
         if (!searchQuery){
             alert('Invalid search. Is the search bar empty?');
         }
-
-    //    let channelInfo = retrieveChannelFromAPI(searchQuery);
-    //    retrievePlaylistId(channelInfo.channelId);
-
+        
+        //    let channelInfo = retrieveChannelFromAPI(searchQuery);
+        //    retrievePlaylistId(channelInfo.channelId);
+        
+        if (!channelInfoContainer.innerHTML == ''){
+            cleanSlate()
+        }
         outputResults(searchQuery);
         
     });
@@ -39,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function(){
             .catch(error => {
                 console.log('error in fetch');
                 console.log('error');
+                alert("This channel may not exist.");
             });
 
         return channelSearchResults;
@@ -115,8 +119,15 @@ document.addEventListener('DOMContentLoaded', function(){
         let channelTitle = document.createElement('h2');
         channelTitle.textContent = channelInfo.channelTitle;
 
+        let channelDesc = document.createElement('p');
+        channelDesc.textContent = channelInfo.channelDescription;
+
         console.log(channelInfo);
         for (let i = 0; i < channelInfo.recentVideos.length; i++){
+
+            if (channelInfo.recentVideos.length == 0){
+                alert("This channel doesn't have any public videos");
+            }
             let wrappingLink = document.createElement('a');
             wrappingLink.href = "https://www.youtube.com/watch?v=" + channelInfo.recentVideos[i].snippet.resourceId.videoId;
 
@@ -129,13 +140,24 @@ document.addEventListener('DOMContentLoaded', function(){
             let videoTitle = document.createElement('h3');
             videoTitle.textContent = channelInfo.recentVideos[i].snippet.title;
 
-            recentVideosContainer.append(containingElement);
+            wrappingLink.append(containingElement);
+            recentVideosContainer.append(wrappingLink);
             containingElement.append(videoThumbnail);
             containingElement.append(videoTitle);
         }
 
         channelInfoContainer.append(channelThumbnail);
         channelInfoContainer.append(channelTitle);
+        channelInfoContainer.append(channelDesc);
+    }
+
+    function cleanSlate() {
+        while (channelInfoContainer.firstChild){
+            channelInfoContainer.removeChild(channelInfoContainer.firstChild);
+        }
+        while(recentVideosContainer.firstChild){
+            recentVideosContainer.removeChild(recentVideosContainer.firstChild);
+        }
     }
 
 });
