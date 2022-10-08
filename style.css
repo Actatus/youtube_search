@@ -1,4 +1,15 @@
 
+#search-bar-container { 
+    margin-top: 1%;
+    display: flex;
+    justify-content: center;
+}
+
+#search-bar-container input {
+    width: 30%;
+}
+
+
 #search-output-container {
     width: 80%;
     margin: 1% auto 0 auto;
@@ -12,7 +23,7 @@
 }
 
 #channel-info-container img{
-    width: 10%;
+    width: 5%;
     height: auto;
 }
 
