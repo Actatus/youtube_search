@@ -138,9 +138,9 @@ document.addEventListener('DOMContentLoaded', function(){
             if (channelInfo.recentVideos[i].snippet.thumbnails.hasOwnProperty('maxres')){
                 videoThumbnail.src = channelInfo.recentVideos[i].snippet.thumbnails.maxres.url;
             } else if (channelInfo.recentVideos[i].snippet.thumbnails.hasOwnProperty('standard')) {
-                channelInfo.recentVideos[i].snippet.thumbnails.standard.url
+                videoThumbnail.src = channelInfo.recentVideos[i].snippet.thumbnails.standard.url
             } else {
-                channelInfo.recentVideos[i].snippet.thumbnails.default.url
+                videoThumbnail.src = channelInfo.recentVideos[i].snippet.thumbnails.default.url
             }
 
             let videoTitle = document.createElement('h3');
