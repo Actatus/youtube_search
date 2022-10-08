@@ -133,7 +133,15 @@ document.addEventListener('DOMContentLoaded', function(){
             containingElement.id = 'video-container-' + i;
 
             let videoThumbnail = document.createElement('img');
-            videoThumbnail.src = channelInfo.recentVideos[i].snippet.thumbnails.default.url;
+
+            //Pull highest resolution thumbnail available
+            if (channelInfo.recentVideos[i].snippet.thumbnails.hasOwnProperty('maxres')){
+                videoThumbnail.src = channelInfo.recentVideos[i].snippet.thumbnails.maxres.url;
+            } else if (channelInfo.recentVideos[i].snippet.thumbnails.hasOwnProperty('standard')) {
+                channelInfo.recentVideos[i].snippet.thumbnails.standard.url
+            } else {
+                channelInfo.recentVideos[i].snippet.thumbnails.default.url
+            }
 
             let videoTitle = document.createElement('h3');
             videoTitle.textContent = channelInfo.recentVideos[i].snippet.title;
