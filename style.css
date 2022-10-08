@@ -1,3 +1,6 @@
+body {
+    background-color: #eee;
+}
 
 #search-bar-container { 
     margin-top: 1%;
@@ -12,7 +15,7 @@
 
 #search-output-container {
     width: 80%;
-    margin: 1% auto 0 auto;
+    margin: 1% auto;
 }
 
 #channel-info-container {
@@ -35,6 +38,14 @@
     row-gap: 3%;
 }
 
+#recent-videos-container a {
+    text-decoration: none;
+}
+
+#recent-videos-container a :hover{
+    text-decoration: underline;
+}
+
 #recent-videos-container div {
     display: flex;
     flex-direction: column;
@@ -47,4 +58,9 @@
     height: auto;
     max-width: 236px;
     max-height: 133px;
+}
+
+footer section{
+    width: 50%;
+    margin: 0 auto;
 }
