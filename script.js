@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 console.log('error');
                 alert("This channel may not exist.");
             });
-
+       
         return channelSearchResults;
     }
     
@@ -123,11 +123,9 @@ document.addEventListener('DOMContentLoaded', function(){
         channelDesc.textContent = channelInfo.channelDescription;
 
         console.log(channelInfo);
+
         for (let i = 0; i < channelInfo.recentVideos.length; i++){
 
-            if (channelInfo.recentVideos.length == 0){
-                alert("This channel doesn't have any public videos");
-            }
             let wrappingLink = document.createElement('a');
             wrappingLink.href = "https://www.youtube.com/watch?v=" + channelInfo.recentVideos[i].snippet.resourceId.videoId;
 
